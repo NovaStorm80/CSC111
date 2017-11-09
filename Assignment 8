@@ -1,0 +1,137 @@
+package Assign8;
+import java.util.*;
+
+public class RecursionAssignment {
+	
+	public static void main(String[] args) {
+		int moves = 0;
+		String word = "";
+		double two = 0.0;
+
+		System.out.println("Towers of Hanoi with 3 discs.");
+		moves = countHanoiMoves(3, moves);	
+		System.out.println("Number of moves: " + moves);
+		
+		System.out.println("\nOrigional word of \"hello\"");
+		word = rotateR("hello", 3);
+		System.out.println("moved 3 times: " + word);
+		word = rotateR("hello", 4);
+		System.out.println("moved 4 times: " + word);
+		System.out.println("");
+		
+		System.out.println("Origional word: axbxcxx");
+		word = noX("axbxcxx");
+		System.out.println("Here is new word: " + word);
+		
+		two = squareTwo(1000);
+		System.out.println("\nClose to the square root of 2: " + two);
+		
+		System.out.println("");
+		call(1,1);
+		
+		System.out.println("\nHave 99 bears, can 91 be reached in 4 turns?");
+		System.out.println(bearGame(91,99,4, false));
+	}
+	
+	static boolean bearGame(int goal, int bears, int count, boolean t) {
+		if (t == true) return true;
+		else if (count == 0) return t;
+		else {
+			if((bears + 53) == goal){
+				bears = bears + 53;	
+			}
+			else if(bears%2 == 0) {
+				bears = bears/2;
+				
+			}
+			else {
+				bears = bears + 53;	
+			}
+			if(bears == goal) t = true;
+			else t = false;
+			
+			bearGame(goal, bears, count-1, t);
+		}
+		System.out.println("goal: " + goal + "\tbears: " + bears);
+		//if(goal == bears) return true;
+		//else return false;
+		if (t == true) return true;
+		else return false;
+	}
+	
+	static String noX(String s) {
+		return noX(s, (s.length()-1));
+	}
+	
+	static void call(int s, int l ) {
+		if(s == 0) return;
+		if(l == 5) return;
+		if(s<5) {
+			for(int i = 0; i < s; i++) {
+				System.out.print(" ");
+			}
+			System.out.println("This was written by call number:" + s);
+		}
+		call(s+1,l+1);	
+		if(l<5){
+			for(int i = 0; i < l; i++) {
+				System.out.print(" ");
+			}
+			System.out.println("This was ALSO written by call number : " + l);
+		}
+	}
+	
+	static double squareTwo(double t) {
+		if(t == 0) return t;
+		else{
+			t = 1 + (1 / (2 + squareTwo(t-1)));
+		}
+		return t;
+	}
+	
+	static String noX(String s, int n) {
+		if(n == 0) return s;
+		else {
+			String sTemp = "";
+			char[] c = s.toCharArray();
+			if(c[n] == 'x') {
+				s = deleteCharAt(s, n);
+			}
+			s = noX(s, n-1);
+		}
+		return s;
+	}
+	
+	static String deleteCharAt(String strValue, int index) {
+		return strValue.substring(0, index) + strValue.substring(index + 1);
+	}
+	
+	static String rotateR(String s, int n){
+		if(n == 0) return s;
+		else{
+			String sTemp = "";
+			char[] c = s.toCharArray();
+	         for(int i=0;i<s.length()-1;i++)
+	         {
+	             char temp = c[i];
+	             c[i]=c[i+1];
+	             c[i+1]=temp;
+	         }
+			for(int i =0; i<s.length();i++) {
+				sTemp += c[i];
+			}
+			s = sTemp;
+			s = rotateR(s, n-1);		
+		}	
+		return s;	
+	}
+		
+	static int countHanoiMoves(int n, int m) {
+		if(n == 0) return m;
+		else{
+			m =	countHanoiMoves	(n-1, m);
+			m = countHanoiMoves(n-1, m+1);
+		}
+		return m;
+	}	
+}
