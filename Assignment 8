@@ -29,14 +29,17 @@ public class RecursionAssignment {
 		System.out.println("");
 		call(1,1);
 		
-		System.out.println("\nHave 99 bears, can 91 be reached in 4 turns?");
-		System.out.println(bearGame(91,99,4, false));
+		System.out.print("\nHave 99 bears, can 91 bears be reached in 3 turns?");
+		System.out.println("\t" + bearGame(91,99,3, false));
+		System.out.print("Have 99 bears, can 91 bears be reached in 4 turns?");
+		System.out.println("\t" + bearGame(91,99,4, false));
 	}
 	
 	static boolean bearGame(int goal, int bears, int count, boolean t) {
 		if (t == true) return true;
 		else if (count == 0) return t;
 		else {
+			
 			if((bears + 53) == goal){
 				bears = bears + 53;	
 			}
@@ -48,13 +51,10 @@ public class RecursionAssignment {
 				bears = bears + 53;	
 			}
 			if(bears == goal) t = true;
-			else t = false;
-			
-			bearGame(goal, bears, count-1, t);
+			else t = false;	
+			if (bearGame(goal, bears, count-1, t) == true) return true;
+			else bearGame(goal, bears, count-1, t);
 		}
-		System.out.println("goal: " + goal + "\tbears: " + bears);
-		//if(goal == bears) return true;
-		//else return false;
 		if (t == true) return true;
 		else return false;
 	}
@@ -133,5 +133,6 @@ public class RecursionAssignment {
 			m = countHanoiMoves(n-1, m+1);
 		}
 		return m;
-	}	
+	}
+	
 }
